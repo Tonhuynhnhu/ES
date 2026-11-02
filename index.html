@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECO-SHARE – Smart Freight Matching Platform</title>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandGreen: '#15803d',
+                        brandBlue: '#2563eb',
+                        brandGreenHover: '#166534',
+                        brandBlueHover: '#1d4ed8',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .nav-item.active {
+            color: #15803d;
+            border-bottom: 3px solid #15803d;
+            font-weight: 700;
+        }
+        .mobile-nav-item.active {
+            background-color: #f0fdf4;
+            color: #15803d;
+            font-weight: 700;
+        }
+        .gradient-line {
+            height: 3px;
+            background: linear-gradient(90deg, #15803d 0%, #2563eb 100%);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <!-- SVG LOGO MATCHING IMAGE EXACTLY -->
+                <div class="flex items-center cursor-pointer py-1" onclick="navigateTo('home')">
+                    <svg width="280" height="90" viewBox="0 0 450 250" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto drop-shadow-sm">
+                        <defs>
+                            <!-- Gradients -->
+                            <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#16a34a"/>
+                                <stop offset="50%" stop-color="#0284c7"/>
+                                <stop offset="100%" stop-color="#2563eb"/>
+                            </linearGradient>
+
+                            <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#22c55e"/>
+                                <stop offset="100%" stop-color="#15803d"/>
+                            </linearGradient>
+
+                            <linearGradient id="ecoTextGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#16a34a"/>
+                                <stop offset="100%" stop-color="#15803d"/>
+                            </linearGradient>
+
+                            <linearGradient id="shareTextGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#2563eb"/>
+                                <stop offset="100%" stop-color="#1d4ed8"/>
+                            </linearGradient>
+
+                            <linearGradient id="truckBodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#3b82f6"/>
+                                <stop offset="100%" stop-color="#1d4ed8"/>
+                            </linearGradient>
+
+                            <linearGradient id="roadGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#16a34a"/>
+                                <stop offset="100%" stop-color="#15803d"/>
+                            </linearGradient>
+                            
+                            <linearGradient id="bottomCurveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#16a34a"/>
+                                <stop offset="50%" stop-color="#0284c7"/>
+                                <stop offset="100%" stop-color="#2563eb"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Outer Capsule Frame -->
+                        <rect x="8" y="8" width="434" height="234" rx="117" fill="#ffffff" stroke="url(#borderGrad)" stroke-width="8"/>
+
+                        <!-- Upper Green Arch / Swoosh -->
+                        <path d="M 90 100 C 130 35, 270 20, 390 95 C 340 50, 180 40, 110 110 Z" fill="url(#leafGrad)"/>
+
+                        <!-- Leaves (Left side) -->
+                        <!-- Large Leaf -->
+                        <path d="M 105 130 C 60 70, 30 110, 35 125 C 65 140, 95 135, 105 130 Z" fill="url(#leafGrad)"/>
+                        <path d="M 50 120 Q 75 125, 105 130" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Small Leaf -->
+                        <path d="M 105 130 C 100 80, 140 70, 150 80 C 145 110, 120 125, 105 130 Z" fill="url(#leafGrad)"/>
+                        <path d="M 125 95 Q 118 112, 105 130" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+
+                        <!-- Truck Motion Speed Lines -->
+                        <path d="M 140 68 L 240 68" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M 130 82 L 235 82" stroke="#0284c7" stroke-width="4.5" stroke-linecap="round"/>
+                        <path d="M 155 96 L 230 96" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M 145 110 L 225 110" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M 160 124 L 220 124" stroke="#0284c7" stroke-width="3" stroke-linecap="round"/>
+
+                        <!-- Detailed Blue Freight Truck -->
+                        <g transform="translate(230, 42)">
+                            <!-- Truck Container Box (Blue Gradient with perspective) -->
+                            <path d="M 0 10 L 85 0 L 85 68 L 0 72 Z" fill="url(#truckBodyGrad)"/>
+                            <!-- Front Cabin -->
+                            <path d="M 85 10 C 95 10, 115 15, 122 30 L 128 50 L 128 68 L 85 68 Z" fill="#1d4ed8"/>
+                            <path d="M 85 15 L 115 17 C 120 25, 122 35, 123 45 L 85 46 Z" fill="#ffffff" opacity="0.9"/>
+                            <path d="M 98 22 L 115 23 L 117 38 L 98 38 Z" fill="#1d4ed8"/>
+                            
+                            <!-- Bumper & Grille -->
+                            <rect x="110" y="52" width="18" height="12" rx="2" fill="#93c5fd"/>
+                            <path d="M 112 55 H 126 M 112 58 H 126 M 112 61 H 126" stroke="#1e3a8a" stroke-width="1.5"/>
+                            
+                            <!-- Headlight -->
+                            <circle cx="124" cy="48" r="3" fill="#fef08a"/>
+
+                            <!-- Wheels -->
+                            <circle cx="20" cy="74" r="10" fill="#0f172a"/>
+                            <circle cx="20" cy="74" r="5" fill="#e2e8f0"/>
+                            <circle cx="40" cy="74" r="10" fill="#0f172a"/>
+                            <circle cx="40" cy="74" r="5" fill="#e2e8f0"/>
+                            
+                            <circle cx="102" cy="74" r="11" fill="#0f172a"/>
+                            <circle cx="102" cy="74" r="5.5" fill="#e2e8f0"/>
+                        </g>
+
+                        <!-- Curved Green Road Below Truck -->
+                        <path d="M 115 130 Q 230 110, 395 125 C 395 125, 380 135, 360 135 Q 230 120, 110 138 Z" fill="url(#roadGrad)"/>
+                        <!-- White Dashed Lane Center Line -->
+                        <path d="M 125 132 Q 230 115, 380 128" stroke="#ffffff" stroke-width="3" stroke-dasharray="10,8" stroke-linecap="round" fill="none"/>
+
+                        <!-- Main Brand Text: ECO-SHARE (Bold Italic) -->
+                        <g transform="translate(42, 195)">
+                            <!-- ECO -->
+                            <text x="0" y="0" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-style="italic" font-size="52" fill="url(#ecoTextGrad)" letter-spacing="1">EC</text>
+                            
+                            <!-- 'O' with inner leaf contour -->
+                            <g transform="translate(73, -42)">
+                                <ellipse cx="20" cy="22" rx="19" ry="21" fill="url(#ecoTextGrad)"/>
+                                <ellipse cx="20" cy="22" rx="10" ry="12" fill="#ffffff"/>
+                                <!-- Leaf inside O -->
+                                <path d="M 13 25 C 13 15, 26 13, 27 24 C 23 27, 15 27, 13 25 Z" fill="url(#ecoTextGrad)"/>
+                                <path d="M 15 24 Q 21 21, 26 19" stroke="#ffffff" stroke-width="1.5"/>
+                            </g>
+
+                            <!-- Hyphen -->
+                            <text x="122" y="0" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-style="italic" font-size="52" fill="url(#shareTextGrad)">-</text>
+
+                            <!-- SHARE -->
+                            <text x="142" y="0" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-style="italic" font-size="52" fill="url(#shareTextGrad)" letter-spacing="1">SHARE</text>
+                        </g>
+
+                        <!-- Bottom Decorative Curved Swoosh Line -->
+                        <path d="M 60 215 Q 225 195, 385 210 Q 225 203, 60 215 Z" fill="url(#bottomCurveGrad)"/>
+                    </svg>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex space-x-4 xl:space-x-6 items-center">
+                    <button onclick="navigateTo('home')" id="nav-home" class="nav-item text-gray-700 hover:text-brandGreen py-6 px-1 transition text-sm font-semibold flex items-center gap-1.5 active">
+                        <i class="fa-solid fa-house"></i> Trang chủ
+                    </button>
+                    <button onclick="navigateTo('terms')" id="nav-terms" class="nav-item text-gray-700 hover:text-brandGreen py-6 px-1 transition text-sm font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-contract"></i> Quy định
+                    </button>
+                    <button onclick="navigateTo('driver')" id="nav-driver" class="nav-item text-gray-700 hover:text-brandGreen py-6 px-1 transition text-sm font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-truck-fast"></i> Tài xế
+                    </button>
+                    <button onclick="navigateTo('customer')" id="nav-customer" class="nav-item text-gray-700 hover:text-brandGreen py-6 px-1 transition text-sm font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-box font-normal"></i> Khách hàng
+                    </button>
+                    <button onclick="navigateTo('match')" id="nav-match" class="nav-item text-gray-700 hover:text-brandGreen py-6 px-1 transition text-sm font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Tự động ghép
+                    </button>
+                    <button onclick="navigateTo('registered')" id="nav-registered" class="nav-item text-gray-700 hover:text-brandGreen py-6 px-1 transition text-sm font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-list-check"></i> Đã đăng ký
+                    </button>
+                    <button onclick="showHotlineAlert()" id="nav-hotline" class="text-gray-700 hover:text-brandBlue py-6 px-1 transition text-sm font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-phone-volume text-brandBlue"></i> Hotline
+                    </button>
+                </nav>
+
+                <!-- Action Button: Clear Data & Mobile Menu Toggle -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="confirmClearData()" class="bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-semibold py-2 px-3.5 rounded-lg transition shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i> <span class="hidden sm:inline">Xóa dữ liệu cũ</span>
+                    </button>
+                    
+                    <button onclick="toggleMobileMenu()" class="lg:hidden text-gray-700 hover:text-brandGreen p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <button onclick="navigateTo('home')" id="mnav-home" class="mobile-nav-item w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-gray-700 flex items-center gap-2">
+                <i class="fa-solid fa-house w-5"></i> Trang chủ
+            </button>
+            <button onclick="navigateTo('terms')" id="mnav-terms" class="mobile-nav-item w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-gray-700 flex items-center gap-2">
+                <i class="fa-solid fa-file-contract w-5"></i> Quy định và điều khoản
+            </button>
+            <button onclick="navigateTo('driver')" id="mnav-driver" class="mobile-nav-item w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-gray-700 flex items-center gap-2">
+                <i class="fa-solid fa-truck-fast w-5"></i> Thông tin tài xế
+            </button>
+            <button onclick="navigateTo('customer')" id="mnav-customer" class="mobile-nav-item w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-gray-700 flex items-center gap-2">
+                <i class="fa-solid fa-box w-5"></i> Thông tin khách hàng
+            </button>
+            <button onclick="navigateTo('match')" id="mnav-match" class="mobile-nav-item w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-gray-700 flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles w-5"></i> Tự động ghép chuyến
+            </button>
+            <button onclick="navigateTo('registered')" id="mnav-registered" class="mobile-nav-item w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-gray-700 flex items-center gap-2">
+                <i class="fa-solid fa-list-check w-5"></i> Đã đăng ký
+            </button>
+            <button onclick="showHotlineAlert()" id="mnav-hotline" class="w-full text-left px-3 py-2.5 rounded-md text-sm font-medium text-brandBlue flex items-center gap-2">
+                <i class="fa-solid fa-phone-volume w-5"></i> Hotline hỗ trợ
+            </button>
+        </div>
+        <div class="gradient-line"></div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- 1. TRANG CHỦ -->
+        <section id="page-home" class="page-content">
+            <!-- HERO BANNER -->
+            <div class="bg-gradient-to-r from-emerald-800 to-blue-900 rounded-2xl text-white p-6 sm:p-10 lg:p-12 shadow-xl relative overflow-hidden mb-10">
+                <div class="absolute -right-10 -bottom-10 opacity-15 pointer-events-none">
+                    <i class="fa-solid fa-truck-ramp-box text-[240px]"></i>
+                </div>
+                <div class="relative z-10 max-w-3xl">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold text-emerald-200 mb-4">
+                        <i class="fa-solid fa-leaf text-emerald-400"></i> Smart Freight Matching Platform
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+                        ECO-SHARE – Nền tảng kết nối hàng hóa chiều xe quay về
+                    </h1>
+                    <p class="text-base sm:text-lg text-emerald-100 font-normal leading-relaxed mb-6">
+                        Tận dụng không gian và tải trọng trống của xe trên chuyến quay về để ghép nhiều đơn hàng nhỏ. Giúp khách hàng tiết kiệm chi phí tối đa và tài xế gia tăng thu nhập hiệu quả.
+                    </p>
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/30 flex items-center justify-center text-emerald-300">
+                                <i class="fa-solid fa-route text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs uppercase tracking-wider text-emerald-200 font-semibold block">Tuyến vận chuyển thử nghiệm</span>
+                                <span class="font-bold text-sm sm:text-base text-white">Cảng Cái Cui <i class="fa-solid fa-arrow-right mx-1 text-emerald-300"></i> Ninh Kiều, Cần Thơ</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button onclick="navigateTo('driver')" class="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-lg text-sm transition text-center shadow">
+                                <i class="fa-solid fa-truck"></i> Đăng ký Xe
+                            </button>
+                            <button onclick="navigateTo('customer')" class="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2.5 rounded-lg text-sm transition text-center shadow">
+                                <i class="fa-solid fa-box"></i> Gửi Hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 FEATURE CARDS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-100 text-brandGreen flex items-center justify-center text-2xl font-bold mb-5">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">1. Tuyến đường chuẩn hóa</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Giới thiệu tuyến vận chuyển cố định từ Cảng Cái Cui đến Ninh Kiều, đi qua các khu vực nhận hàng trung gian chuẩn hóa: Hưng Phú, Võ Nguyên Giáp, Hưng Lợi và Nguyễn Văn Linh.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-xl bg-blue-100 text-brandBlue flex items-center justify-center text-2xl font-bold mb-5">
+                        <i class="fa-solid fa-code-merge"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">2. Ghép đôi thông minh</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Hệ thống tự động tìm kiếm và kết nối tài xế với khách hàng dựa trên điều kiện tuyến đường, tải trọng, khu vực nhận hàng và thời gian xuất phát lệch chuẩn xác 30 phút.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 hover:shadow-lg transition flex flex-col items-start">
+                    <div class="w-14 h-14 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl font-bold mb-5">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">3. An toàn và tin cậy</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Hiển thị minh bạch thông tin tài xế, khách hàng, chi tiết đơn hàng và áp dụng chặt chẽ các quy định vận chuyển để các bên dễ dàng theo dõi và yên tâm hợp tác.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. QUY ĐỊNH VÀ ĐIỀU KHOẢN -->
+        <section id="page-terms" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 sm:p-8">
+                <div class="border-b border-gray-200 pb-5 mb-6">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-brandGreen flex items-center gap-3">
+                        <i class="fa-solid fa-file-shield text-brandBlue"></i> ECO-SHARE – QUY ĐỊNH VẬN CHUYỂN
+                    </h2>
+                    <p class="text-gray-600 mt-2 text-sm sm:text-base">
+                        Để đảm bảo an toàn cho hàng hóa và quyền lợi của tất cả các bên, vui lòng tham khảo các quy định chi tiết dưới đây.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <!-- Hàng được nhận -->
+                    <div class="bg-emerald-50/60 border border-emerald-200 rounded-xl p-5">
+                        <h3 class="text-lg font-bold text-emerald-900 flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i> 1. Hàng được nhận
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-3 font-medium">Những mặt hàng sau đây được phép vận chuyển qua ECO-SHARE:</p>
+                        <ul class="space-y-2.5 text-sm text-gray-700 font-medium">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Linh kiện, thiết bị điện tử nhỏ</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Quần áo, thời trang, phụ kiện</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Văn phòng phẩm, tài liệu</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Thực phẩm khô đóng gói sẵn</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Đồ gia dụng nhỏ gọn</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Hàng carton có bao bì đóng gói chắc chắn</li>
+                        </ul>
+                    </div>
+
+                    <!-- Hàng không nhận -->
+                    <div class="bg-rose-50/60 border border-rose-200 rounded-xl p-5">
+                        <h3 class="text-lg font-bold text-rose-900 flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-circle-xmark text-rose-600 text-xl"></i> 2. Hàng không nhận
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-3 font-medium">Các mặt hàng sau tuyệt đối KHÔNG vận chuyển qua hệ thống:</p>
+                        <ul class="space-y-2.5 text-sm text-gray-700 font-medium">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-600"></i> Hàng cấm theo quy định pháp luật</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-600"></i> Hàng dễ cháy nổ, hóa chất nguy hiểm</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-600"></i> Hàng tươi sống cần bảo quản lạnh</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-600"></i> Hàng chất lỏng rò rỉ, gây bẩn</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-600"></i> Hàng quá khổ, cần thiết bị nâng hạ</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-xmark text-rose-600"></i> Hàng dễ vỡ hoặc có giá trị cao</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Các khối quy định thêm -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-xl">
+                        <div class="text-brandBlue font-bold text-lg flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-sack-dollar"></i> 3. Giới hạn giá trị
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            Giá trị hàng hóa tối đa <strong class="text-gray-900">2.000.000 đồng / đơn</strong> trong toàn bộ giai đoạn thử nghiệm.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-xl">
+                        <div class="text-brandBlue font-bold text-lg flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-camera"></i> 4. Kiểm tra hàng
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            Tài xế thực hiện <strong class="text-gray-900">chụp ảnh bằng chứng</strong> tại điểm nhận hàng và điểm giao hàng để làm đối chiếu.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-xl">
+                        <div class="text-brandBlue font-bold text-lg flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-hand-holding-dollar"></i> 5. Bồi thường
+                        </div>
+                        <p class="text-sm text-gray-600">
+                            Nếu xảy ra hư hỏng/mất mát do lỗi vận chuyển, xem xét bồi thường tối đa <strong class="text-gray-900">100% giá trị</strong> (không quá 2.000.000đ).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quy định thời gian ghép chuyến & Lưu ý -->
+                <div class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-r-xl mb-8 space-y-4">
+                    <div>
+                        <h4 class="font-bold text-amber-900 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-amber-600"></i> 6. Lưu ý vận hành
+                        </h4>
+                        <p class="text-sm text-amber-800 mt-1">
+                            ECO-SHARE là mô hình ghép nhiều đơn hàng nhỏ trên cùng tuyến đường quay về, vì vậy xe <strong class="underline">không cần phải đầy tải</strong> mới khởi hành.
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-t border-amber-200/80">
+                        <h4 class="font-bold text-amber-900 text-base flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-amber-600"></i> 7. Quy định nghiêm ngặt về thời gian ghép chuyến
+                        </h4>
+                        <p class="text-sm text-amber-800 mt-1">
+                            Thời gian khách hàng muốn gửi hàng phải muộn hơn giờ khởi hành của tài xế <span class="bg-amber-200 px-2 py-0.5 rounded font-extrabold text-amber-900">ĐÚNG 30 PHÚT</span>.
+                        </p>
+                        <div class="bg-white/80 p-3 rounded-lg mt-2 text-xs text-amber-900 space-y-1 font-mono">
+                            <div>• Ví dụ hợp lệ: Tài xế khởi hành <span class="font-bold">08:00</span> <i class="fa-solid fa-arrow-right mx-1"></i> Khách hàng muốn gửi lúc <span class="font-bold">08:30</span>.</div>
+                            <div>• Hệ thống CHỈ ghép chuyến khi đúng chênh lệch 30 phút. Không ghép nếu chênh lệch lớn hơn hoặc nhỏ hơn 30 phút.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message slogan -->
+                <div class="text-center py-4 bg-gradient-to-r from-emerald-600 to-blue-600 rounded-xl text-white font-bold text-lg shadow-md">
+                    <i class="fa-solid fa-heart text-rose-300 mr-2"></i> Cùng ECO-SHARE, hàng hóa đến nơi – giá trị được chia sẻ!
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TRANG THÔNG TIN TÀI XẾ -->
+        <section id="page-driver" class="page-content hidden">
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-md border border-gray-100 p-6 sm:p-8">
+                <div class="flex items-center gap-3 border-b border-gray-200 pb-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-brandGreen flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Đăng Ký Thông Tin Tài Xế</h2>
+                        <p class="text-xs text-gray-500">Nhập thông tin không gian trống và tuyến đường xe quay về</p>
+                    </div>
+                </div>
+
+                <form id="driverForm" onsubmit="handleDriverSubmit(event)" class="space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Họ và tên tài xế <span class="text-red-500">*</span></label>
+                            <input type="text" id="driverName" required placeholder="Nhập họ và tên" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Số điện thoại (10 chữ số) <span class="text-red-500">*</span></label>
+                            <input type="tel" id="driverPhone" required maxlength="10" placeholder="0912345678" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Biển số xe <span class="text-red-500">*</span></label>
+                            <input type="text" id="driverPlate" required placeholder="VD: 65A-123.45" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Tải trọng còn trống <span class="text-red-500">*</span></label>
+                            <select id="driverCapacity" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                                <option value="">-- Chọn gói tải trọng --</option>
+                                <option value="S">Gói S (Dưới 5 kg) – Nhận: 30.000 đ</option>
+                                <option value="M">Gói M (Từ 5 - 15 kg) – Nhận: 40.000 đ</option>
+                                <option value="L">Gói L (Từ 15 - 30 kg) – Nhận: 60.000 đ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Điểm xuất phát (Cố định)</label>
+                            <input type="text" value="Cảng Cái Cui, Cần Thơ" disabled class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 bg-gray-100 text-gray-600 font-semibold text-sm cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Điểm đến (Cố định)</label>
+                            <input type="text" value="Ninh Kiều, Cần Thơ" disabled class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 bg-gray-100 text-gray-600 font-semibold text-sm cursor-not-allowed">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Khu vực có thể nhận hàng (Có thể chọn nhiều) <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <label class="flex items-center gap-2 p-2.5 border rounded-lg hover:bg-emerald-50 cursor-pointer text-sm">
+                                <input type="checkbox" name="driverAreas" value="Hưng Phú" class="w-4 h-4 text-emerald-600 rounded"> Hưng Phú
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 border rounded-lg hover:bg-emerald-50 cursor-pointer text-sm">
+                                <input type="checkbox" name="driverAreas" value="Võ Nguyên Giáp" class="w-4 h-4 text-emerald-600 rounded"> Võ Nguyên Giáp
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 border rounded-lg hover:bg-emerald-50 cursor-pointer text-sm">
+                                <input type="checkbox" name="driverAreas" value="Hưng Lợi" class="w-4 h-4 text-emerald-600 rounded"> Hưng Lợi
+                            </label>
+                            <label class="flex items-center gap-2 p-2.5 border rounded-lg hover:bg-emerald-50 cursor-pointer text-sm">
+                                <input type="checkbox" name="driverAreas" value="Nguyễn Văn Linh" class="w-4 h-4 text-emerald-600 rounded"> Nguyễn Văn Linh
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Thời gian khởi hành <span class="text-red-500">*</span></label>
+                        <input type="datetime-local" id="driverTime" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                    </div>
+
+                    <button type="submit" class="w-full bg-brandGreen hover:bg-brandGreenHover text-white font-bold py-3 px-6 rounded-xl transition shadow-lg text-base">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Hoàn Tất Đăng Ký Tài Xế
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 4. TRANG THÔNG TIN KHÁCH HÀNG -->
+        <section id="page-customer" class="page-content hidden">
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-md border border-gray-100 p-6 sm:p-8">
+                <div class="flex items-center gap-3 border-b border-gray-200 pb-4 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-brandBlue flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900">Đăng Ký Gửi Hàng (Khách Hàng)</h2>
+                        <p class="text-xs text-gray-500">Nhập thông tin đơn hàng và địa chỉ cụ thể để hệ thống tự nhận diện khu vực</p>
+                    </div>
+                </div>
+
+                <form id="customerForm" onsubmit="handleCustomerSubmit(event)" class="space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Họ và tên khách hàng <span class="text-red-500">*</span></label>
+                            <input type="text" id="customerName" required placeholder="Nhập họ và tên" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Số điện thoại (10 chữ số) <span class="text-red-500">*</span></label>
+                            <input type="tel" id="customerPhone" required maxlength="10" placeholder="0987654321" class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Địa chỉ lấy hàng cụ thể <span class="text-red-500">*</span></label>
+                        <input type="text" id="customerAddress" required placeholder="VD: Số 123 đường Võ Nguyên Giáp, P. Hưng Thạnh..." class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        <p class="text-[11px] text-gray-500 mt-1 italic">
+                            * Lưu ý: Địa chỉ phải chứa 1 trong các khu vực chuẩn hóa: <strong class="text-brandBlue">Hưng Phú, Võ Nguyên Giáp, Hưng Lợi, Nguyễn Văn Linh</strong> để hệ thống nhận diện.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Điểm đến (Cố định)</label>
+                            <input type="text" value="Ninh Kiều, Cần Thơ" disabled class="w-full px-3.5 py-2.5 rounded-lg border border-gray-200 bg-gray-100 text-gray-600 font-semibold text-sm cursor-not-allowed">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Khối lượng hàng hóa <span class="text-red-500">*</span></label>
+                            <select id="customerWeight" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                                <option value="">-- Chọn gói hàng --</option>
+                                <option value="S">Gói S (Dưới 5 kg) – Phí: 50.000 đ</option>
+                                <option value="M">Gói M (Từ 5 - 15 kg) – Phí: 70.000 đ</option>
+                                <option value="L">Gói L (Từ 15 - 30 kg) – Phí: 90.000 đ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Thời gian muốn gửi hàng <span class="text-red-500">*</span></label>
+                        <input type="datetime-local" id="customerTime" required class="w-full px-3.5 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    </div>
+
+                    <button type="submit" class="w-full bg-brandBlue hover:bg-brandBlueHover text-white font-bold py-3 px-6 rounded-xl transition shadow-lg text-base">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Hoàn Tất Đăng Ký Gửi Hàng
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 5. TRANG TỰ ĐỘNG GHÉP CHUYẾN -->
+        <section id="page-match" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 sm:p-8 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-200 pb-6 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-gray-900 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-brandGreen"></i> Tự Động Ghép Chuyến Thông Minh
+                        </h2>
+                        <p class="text-sm text-gray-600 mt-1">
+                            Thuật toán kiểm tra chính xác 4 điều kiện: Tuyến đường, Tải trọng, Khu vực nhận diện & Thời gian gửi muộn hơn giờ chạy <strong class="text-brandGreen">ĐÚNG 30 phút</strong>.
+                        </p>
+                    </div>
+                    <button onclick="runAutoMatching()" class="bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 text-white font-extrabold px-6 py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-rotate text-lg"></i> Thực Hiện Ghép Chuyến
+                    </button>
+                </div>
+
+                <!-- Match Results Container -->
+                <div id="matchResultsContainer" class="space-y-6">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. TRANG ĐÃ ĐĂNG KÝ -->
+        <section id="page-registered" class="page-content hidden">
+            <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-6 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-gray-900 flex items-center gap-2">
+                            <i class="fa-solid fa-database text-brandBlue"></i> Danh Sách Đã Đăng Ký
+                        </h2>
+                        <p class="text-xs text-gray-500 mt-1">Quản lý toàn bộ dữ liệu tài xế và khách hàng trên hệ thống</p>
+                    </div>
+
+                    <!-- Filter Control -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-gray-600 uppercase">Lọc trạng thái:</span>
+                        <select id="statusFilter" onchange="renderRegisteredTables()" class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm font-semibold focus:ring-2 focus:ring-emerald-500">
+                            <option value="ALL">Tất cả</option>
+                            <option value="MATCHED">Đã ghép</option>
+                            <option value="WAITING">Chờ ghép</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Driver Table Section -->
+                <div class="mb-10">
+                    <h3 class="text-lg font-bold text-brandGreen flex items-center gap-2 mb-3">
+                        <i class="fa-solid fa-truck-steering"></i> 1. Danh sách Tài Xế đã đăng ký
+                    </h3>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead class="bg-emerald-50 text-emerald-900 font-bold border-b border-emerald-100">
+                                <tr>
+                                    <th class="p-3">STT</th>
+                                    <th class="p-3">Họ tên tài xế</th>
+                                    <th class="p-3">SĐT</th>
+                                    <th class="p-3">Biển số</th>
+                                    <th class="p-3">Tải trọng</th>
+                                    <th class="p-3">Khu vực nhận hàng</th>
+                                    <th class="p-3">Tuyến đường</th>
+                                    <th class="p-3">Thời gian khởi hành</th>
+                                    <th class="p-3">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="driverTableBody" class="divide-y divide-gray-100 bg-white">
+                                <!-- Dynamic JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Customer Table Section -->
+                <div>
+                    <h3 class="text-lg font-bold text-brandBlue flex items-center gap-2 mb-3">
+                        <i class="fa-solid fa-boxes-packing"></i> 2. Danh sách Khách Hàng gửi hàng
+                    </h3>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                        <table class="w-full text-left text-xs sm:text-sm">
+                            <thead class="bg-blue-50 text-blue-900 font-bold border-b border-blue-100">
+                                <tr>
+                                    <th class="p-3">STT</th>
+                                    <th class="p-3">Họ tên khách</th>
+                                    <th class="p-3">SĐT</th>
+                                    <th class="p-3">Địa chỉ lấy hàng cụ thể</th>
+                                    <th class="p-3">Khu vực nhận diện</th>
+                                    <th class="p-3">Điểm đến</th>
+                                    <th class="p-3">Gói hàng</th>
+                                    <th class="p-3">Thời gian muốn gửi</th>
+                                    <th class="p-3">Trạng thái</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customerTableBody" class="divide-y divide-gray-100 bg-white">
+                                <!-- Dynamic JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-xs">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="font-semibold text-gray-300">ECO-SHARE – Smart Freight Matching Platform © 2026</p>
+            <p>Tuyến thử nghiệm: Cảng Cái Cui – Ninh Kiều, Cần Thơ | Nền tảng kết nối ghép hàng chiều xe quay về</p>
+        </div>
+    </footer>
+
+    <!-- MODAL CHI TIẾT ĐƠN GHÉP -->
+    <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl relative overflow-hidden animate-fade-in">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl p-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-gray-900 mb-4 border-b pb-3 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-brandBlue"></i> Chi Tiết Khớp Chuyến Vận Chuyển
+            </h3>
+            <div id="modalContent" class="space-y-4 text-sm">
+                <!-- JS Inject -->
+            </div>
+            <div class="mt-6 text-right">
+                <button onclick="closeModal()" class="bg-gray-800 hover:bg-gray-900 text-white font-semibold px-5 py-2 rounded-lg">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Standard normalized areas allowed
+        const ALLOWED_AREAS = ["Hưng Phú", "Võ Nguyên Giáp", "Hưng Lợi", "Nguyễn Văn Linh"];
+
+        // Pricing tables
+        const DRIVER_PAY = { 'S': 30000, 'M': 40000, 'L': 60000 };
+        const CUSTOMER_FEE = { 'S': 50000, 'M': 70000, 'L': 90000 };
+        const PACKAGE_NAMES = { 'S': 'Gói S (< 5kg)', 'M': 'Gói M (5-15kg)', 'L': 'Gói L (15-30kg)' };
+
+        // INITIALIZE LOCALSTORAGE STATE
+        function getDrivers() {
+            return JSON.parse(localStorage.getItem('ecoshare_drivers')) || [];
+        }
+
+        function saveDrivers(drivers) {
+            localStorage.setItem('ecoshare_drivers', JSON.stringify(drivers));
+        }
+
+        function getCustomers() {
+            return JSON.parse(localStorage.getItem('ecoshare_customers')) || [];
+        }
+
+        function saveCustomers(customers) {
+            localStorage.setItem('ecoshare_customers', JSON.stringify(customers));
+        }
+
+        function getMatchHistory() {
+            return JSON.parse(localStorage.getItem('ecoshare_matches')) || [];
+        }
+
+        function saveMatchHistory(matches) {
+            localStorage.setItem('ecoshare_matches', JSON.stringify(matches));
+        }
+
+        // NAVIGATION LOGIC
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`page-${pageId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+
+            const desktopNav = document.getElementById(`nav-${pageId}`);
+            if (desktopNav) desktopNav.classList.add('active');
+
+            const mobileNav = document.getElementById(`mnav-${pageId}`);
+            if (mobileNav) mobileNav.classList.add('active');
+
+            // Hide mobile menu on selection
+            document.getElementById('mobileMenu').classList.add('hidden');
+
+            // Trigger specific page renders
+            if (pageId === 'registered') {
+                renderRegisteredTables();
+            } else if (pageId === 'match') {
+                renderMatchView();
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function showHotlineAlert() {
+            alert("Đây là hotline minh họa của bản demo: 0900 000 000");
+        }
+
+        // CONFIRM CLEAR DATA
+        function confirmClearData() {
+            if (confirm("Bạn có chắc chắn muốn xóa toàn bộ dữ liệu đăng ký tài xế, khách hàng và lịch sử ghép chuyến khỏi LocalStorage?")) {
+                localStorage.removeItem('ecoshare_drivers');
+                localStorage.removeItem('ecoshare_customers');
+                localStorage.removeItem('ecoshare_matches');
+                alert("Đã xóa sạch dữ liệu cũ thành công!");
+                // Refresh UI
+                renderRegisteredTables();
+                renderMatchView();
+            }
+        }
+
+        // PHONE VALIDATION
+        function isValidPhone(phone) {
+            return /^[0-9]{10}$/.test(phone);
+        }
+
+        // HELPER: FORMAT DATETIME STRING BEAUTIFULLY
+        function formatDateTime(dateTimeStr) {
+            if (!dateTimeStr) return '';
+            const dt = new Date(dateTimeStr);
+            const date = dt.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const time = dt.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            return `${time} - ${date}`;
+        }
+
+        // DRIVER REGISTRATION
+        function handleDriverSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('driverName').value.trim();
+            const phone = document.getElementById('driverPhone').value.trim();
+            const plate = document.getElementById('driverPlate').value.trim();
+            const capacity = document.getElementById('driverCapacity').value;
+            const time = document.getElementById('driverTime').value;
+
+            // Checked areas
+            const areaBoxes = document.querySelectorAll('input[name="driverAreas"]:checked');
+            const selectedAreas = Array.from(areaBoxes).map(cb => cb.value);
+
+            if (!isValidPhone(phone)) {
+                alert("Số điện thoại phải bao gồm đúng 10 chữ số!");
+                return;
+            }
+
+            if (selectedAreas.length === 0) {
+                alert("Vui lòng chọn ít nhất một khu vực có thể nhận hàng!");
+                return;
+            }
+
+            const newDriver = {
+                id: 'DRV_' + Date.now(),
+                name,
+                phone,
+                plate,
+                capacity,
+                origin: 'Cảng Cái Cui, Cần Thơ',
+                destination: 'Ninh Kiều, Cần Thơ',
+                areas: selectedAreas,
+                time,
+                status: 'Chờ ghép'
+            };
+
+            const drivers = getDrivers();
+            drivers.push(newDriver);
+            saveDrivers(drivers);
+
+            alert("Đăng ký thông tin tài xế thành công!");
+            document.getElementById('driverForm').reset();
+            navigateTo('registered');
+        }
+
+        // CUSTOMER AREA AUTO-DETECTION FROM ADDRESS
+        function detectAreaFromAddress(address) {
+            if (!address) return null;
+            // Remove vietnamese accents & lowercase for fuzzy comparison fallback if needed
+            const normAddress = address.toLowerCase();
+
+            for (let area of ALLOWED_AREAS) {
+                if (normAddress.includes(area.toLowerCase())) {
+                    return area;
+                }
+            }
+            return null;
+        }
+
+        // CUSTOMER REGISTRATION
+        function handleCustomerSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const address = document.getElementById('customerAddress').value.trim();
+            const weight = document.getElementById('customerWeight').value;
+            const time = document.getElementById('customerTime').value;
+
+            if (!isValidPhone(phone)) {
+                alert("Số điện thoại phải bao gồm đúng 10 chữ số!");
+                return;
+            }
+
+            // Detect area
+            const detectedArea = detectAreaFromAddress(address);
+            if (!detectedArea) {
+                alert("Hệ thống CHƯA XÁC ĐỊNH ĐƯỢC KHU VỰC từ địa chỉ của bạn!\n\nVui lòng ghi rõ thêm tên 1 trong các khu vực chuẩn hóa trong địa chỉ: Hưng Phú, Võ Nguyên Giáp, Hưng Lợi, hoặc Nguyễn Văn Linh.");
+                return;
+            }
+
+            const newCustomer = {
+                id: 'CUST_' + Date.now(),
+                name,
+                phone,
+                address,
+                detectedArea: detectedArea,
+                destination: 'Ninh Kiều, Cần Thơ',
+                weight,
+                time,
+                status: 'Chờ ghép'
+            };
+
+            const customers = getCustomers();
+            customers.push(newCustomer);
+            saveCustomers(customers);
+
+            alert(`Đăng ký gửi hàng thành công!\nKhu vực được hệ thống tự động nhận diện: [ ${detectedArea} ]`);
+            document.getElementById('customerForm').reset();
+            navigateTo('registered');
+        }
+
+        // CAPACITY CHECK: DRIVER CAP vs CUSTOMER WEIGHT
+        function isCapacityCompatible(driverCap, customerWeight) {
+            // S = 1, M = 2, L = 3
+            const valMap = { 'S': 1, 'M': 2, 'L': 3 };
+            return valMap[driverCap] >= valMap[customerWeight];
+        }
+
+        // TIME CHECK: CUSTOMER TIME MINUS DRIVER TIME EXACTLY 30 MINUTES
+        function isTimeExactly30MinsLater(driverTimeStr, customerTimeStr) {
+            const dTime = new Date(driverTimeStr).getTime();
+            const cTime = new Date(customerTimeStr).getTime();
+            const diffMinutes = (cTime - dTime) / (1000 * 60);
+            return diffMinutes === 30;
+        }
+
+        // RUN AUTO MATCHING ALGORITHM
+        function runAutoMatching() {
+            let drivers = getDrivers();
+            let customers = getCustomers();
+            let matches = getMatchHistory();
+
+            let newMatchesCount = 0;
+
+            // Iterate over un-matched drivers & customers
+            for (let d of drivers) {
+                if (d.status === 'Đã ghép') continue;
+
+                for (let c of customers) {
+                    if (c.status === 'Đã ghép') continue;
+
+                    // Condition 1: Route (Fixed Cảng Cái Cui -> Ninh Kiều)
+                    // Condition 2: Area match
+                    const areaOk = d.areas.includes(c.detectedArea);
+
+                    // Condition 3: Capacity match
+                    const capOk = isCapacityCompatible(d.capacity, c.weight);
+
+                    // Condition 4: Exact 30 minutes later
+                    const timeOk = isTimeExactly30MinsLater(d.time, c.time);
+
+                    if (areaOk && capOk && timeOk) {
+                        // MATCH SUCCESS!
+                        d.status = 'Đã ghép';
+                        c.status = 'Đã ghép';
+
+                        const matchObj = {
+                            id: 'MATCH_' + Date.now() + '_' + Math.floor(Math.random() * 100),
+                            driver: { ...d },
+                            customer: { ...c },
+                            fee: CUSTOMER_FEE[c.weight],
+                            pay: DRIVER_PAY[d.capacity],
+                            timestamp: new Date().toISOString()
+                        };
+
+                        matches.push(matchObj);
+                        newMatchesCount++;
+
+                        // 1-to-1 match enforced, break customer loop for this driver
+                        break;
+                    }
+                }
+            }
+
+            if (newMatchesCount > 0) {
+                saveDrivers(drivers);
+                saveCustomers(customers);
+                saveMatchHistory(matches);
+                alert(`Ghép chuyến tự động thành công! Đã tìm thấy ${newMatchesCount} cặp khớp mới.`);
+            }
+
+            renderMatchView();
+        }
+
+        // RENDER MATCHING VIEW
+        function renderMatchView() {
+            const container = document.getElementById('matchResultsContainer');
+            const matches = getMatchHistory();
+
+            if (matches.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl text-center text-sm font-semibold">
+                        <i class="fa-solid fa-circle-exclamation text-lg mr-2"></i>
+                        Hiện chưa tìm thấy chuyến xe phù hợp. Vui lòng kiểm tra lại thông tin đăng ký hoặc thử ghép chuyến sau.
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">';
+            matches.forEach((m, idx) => {
+                html += `
+                    <div class="bg-white border-2 border-emerald-500 rounded-2xl p-5 shadow-md relative flex flex-col justify-between">
+                        <div class="absolute top-4 right-4 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full border border-emerald-300">
+                            <i class="fa-solid fa-circle-check"></i> Đã ghép chuyến
+                        </div>
+
+                        <div>
+                            <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Mã ghép: ${m.id}</div>
+                            
+                            <!-- DRIVER INFO BOX -->
+                            <div class="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-100 mb-3 space-y-1.5">
+                                <div class="font-bold text-emerald-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-truck text-emerald-700"></i> Tài xế: ${m.driver.name}
+                                </div>
+                                <div class="text-xs text-gray-700 grid grid-cols-2 gap-1">
+                                    <div><strong>SĐT:</strong> ${m.driver.phone}</div>
+                                    <div><strong>Biển số:</strong> ${m.driver.plate}</div>
+                                    <div><strong>Tải trọng:</strong> ${PACKAGE_NAMES[m.driver.capacity]}</div>
+                                    <div><strong>Giờ chạy:</strong> <span class="font-bold text-emerald-700">${formatDateTime(m.driver.time)}</span></div>
+                                </div>
+                            </div>
+
+                            <!-- CUSTOMER INFO BOX -->
+                            <div class="bg-blue-50/70 p-3.5 rounded-xl border border-blue-100 mb-4 space-y-1.5">
+                                <div class="font-bold text-blue-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-user-tag text-blue-700"></i> Khách hàng: ${m.customer.name}
+                                </div>
+                                <div class="text-xs text-gray-700 space-y-1">
+                                    <div class="grid grid-cols-2 gap-1">
+                                        <div><strong>SĐT:</strong> ${m.customer.phone}</div>
+                                        <div><strong>Khối lượng:</strong> ${PACKAGE_NAMES[m.customer.weight]}</div>
+                                    </div>
+                                    <div><strong>Khu vực nhận diện:</strong> <span class="bg-blue-200 text-blue-900 font-bold px-1.5 py-0.5 rounded text-[11px]">${m.customer.detectedArea}</span></div>
+                                    <div><strong>Địa chỉ cụ thể:</strong> ${m.customer.address}</div>
+                                    <div><strong>Giờ gửi muốn:</strong> <span class="font-bold text-blue-700">${formatDateTime(m.customer.time)}</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FINANCIAL SUMMARY & ACTION -->
+                        <div class="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                            <div>
+                                <span class="text-gray-500">Phí khách trả: <strong class="text-blue-700 font-bold">${m.fee.toLocaleString()} đ</strong></span> | 
+                                <span class="text-gray-500">Mức nhận tài xế: <strong class="text-emerald-700 font-bold">${m.pay.toLocaleString()} đ</strong></span>
+                            </div>
+                            <button onclick="openDetailModal('${m.id}')" class="bg-brandGreen hover:bg-brandGreenHover text-white font-bold px-3 py-1.5 rounded-lg transition text-xs">
+                                Xem chi tiết
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+
+            container.innerHTML = html;
+        }
+
+        // MODAL DETAIL VIEW
+        function openDetailModal(matchId) {
+            const matches = getMatchHistory();
+            const m = matches.find(item => item.id === matchId);
+            if (!m) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <div class="p-3 bg-gray-50 rounded-xl border flex justify-between items-center text-xs">
+                        <span><strong>Tuyến đường ghép:</strong> Cảng Cái Cui <i class="fa-solid fa-arrow-right"></i> Ninh Kiều</span>
+                        <span class="text-emerald-600 font-bold"><i class="fa-solid fa-clock font-normal"></i> Chênh lệch: Đúng 30 phút</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="border p-3.5 rounded-xl bg-emerald-50/40">
+                            <h4 class="font-bold text-emerald-800 border-b pb-2 mb-2">THÔNG TIN TÀI XẾ</h4>
+                            <p><strong>Họ tên:</strong> ${m.driver.name}</p>
+                            <p><strong>Số điện thoại:</strong> ${m.driver.phone}</p>
+                            <p><strong>Biển số xe:</strong> ${m.driver.plate}</p>
+                            <p><strong>Tải trọng đăng ký:</strong> ${PACKAGE_NAMES[m.driver.capacity]}</p>
+                            <p><strong>Khu vực tài xế nhận:</strong> ${m.driver.areas.join(', ')}</p>
+                            <p><strong>Thời gian xuất phát:</strong> ${formatDateTime(m.driver.time)}</p>
+                            <p class="mt-2 text-emerald-700"><strong>Mức nhận tài xế:</strong> ${m.pay.toLocaleString()} VNĐ</p>
+                        </div>
+
+                        <div class="border p-3.5 rounded-xl bg-blue-50/40">
+                            <h4 class="font-bold text-blue-800 border-b pb-2 mb-2">THÔNG TIN KHÁCH HÀNG</h4>
+                            <p><strong>Họ tên:</strong> ${m.customer.name}</p>
+                            <p><strong>Số điện thoại:</strong> ${m.customer.phone}</p>
+                            <p><strong>Gói hàng gửi:</strong> ${PACKAGE_NAMES[m.customer.weight]}</p>
+                            <p><strong>Khu vực hệ thống nhận diện:</strong> ${m.customer.detectedArea}</p>
+                            <p><strong>Địa chỉ chi tiết:</strong> ${m.customer.address}</p>
+                            <p><strong>Thời gian muốn gửi:</strong> ${formatDateTime(m.customer.time)}</p>
+                            <p class="mt-2 text-blue-700"><strong>Phí khách hàng thanh toán:</strong> ${m.fee.toLocaleString()} VNĐ</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('detailModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+        }
+
+        // RENDER TABLES ON REGISTERED PAGE
+        function renderRegisteredTables() {
+            const filter = document.getElementById('statusFilter').value;
+            const drivers = getDrivers();
+            const customers = getCustomers();
+
+            // Render Driver Table
+            const dBody = document.getElementById('driverTableBody');
+            let filteredDrivers = drivers.filter(d => filter === 'ALL' || (filter === 'MATCHED' && d.status === 'Đã ghép') || (filter === 'WAITING' && d.status === 'Chờ ghép'));
+
+            if (filteredDrivers.length === 0) {
+                dBody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-gray-400 italic">Chưa có dữ liệu tài xế</td></tr>`;
+            } else {
+                dBody.innerHTML = filteredDrivers.map((d, index) => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3 font-semibold text-gray-500">${index + 1}</td>
+                        <td class="p-3 font-bold text-gray-800">${d.name}</td>
+                        <td class="p-3">${d.phone}</td>
+                        <td class="p-3 font-mono text-xs">${d.plate}</td>
+                        <td class="p-3">${PACKAGE_NAMES[d.capacity]}</td>
+                        <td class="p-3">${d.areas.join(', ')}</td>
+                        <td class="p-3 text-xs text-gray-500">${d.origin} <i class="fa-solid fa-arrow-right"></i> ${d.destination}</td>
+                        <td class="p-3">${formatDateTime(d.time)}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${d.status === 'Đã ghép' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                                ${d.status}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Render Customer Table
+            const cBody = document.getElementById('customerTableBody');
+            let filteredCustomers = customers.filter(c => filter === 'ALL' || (filter === 'MATCHED' && c.status === 'Đã ghép') || (filter === 'WAITING' && c.status === 'Chờ ghép'));
+
+            if (filteredCustomers.length === 0) {
+                cBody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-gray-400 italic">Chưa có dữ liệu khách hàng</td></tr>`;
+            } else {
+                cBody.innerHTML = filteredCustomers.map((c, index) => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-3 font-semibold text-gray-500">${index + 1}</td>
+                        <td class="p-3 font-bold text-gray-800">${c.name}</td>
+                        <td class="p-3">${c.phone}</td>
+                        <td class="p-3 text-xs max-w-xs truncate" title="${c.address}">${c.address}</td>
+                        <td class="p-3"><span class="bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded text-xs">${c.detectedArea}</span></td>
+                        <td class="p-3 text-xs text-gray-500">${c.destination}</td>
+                        <td class="p-3">${PACKAGE_NAMES[c.weight]}</td>
+                        <td class="p-3">${formatDateTime(c.time)}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-0.5 rounded text-[11px] font-bold ${c.status === 'Đã ghép' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                                ${c.status}
+                            </span>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // SEED SAMPLE DEMO DATA IF LOCALSTORAGE IS EMPTY
+        function seedDemoDataIfEmpty() {
+            if (!localStorage.getItem('ecoshare_drivers') && !localStorage.getItem('ecoshare_customers')) {
+                const sampleDrivers = [
+                    {
+                        id: 'DRV_DEMO_1',
+                        name: 'Nguyễn Văn Tài',
+                        phone: '0918123456',
+                        plate: '65A-888.99',
+                        capacity: 'L',
+                        origin: 'Cảng Cái Cui, Cần Thơ',
+                        destination: 'Ninh Kiều, Cần Thơ',
+                        areas: ['Hưng Phú', 'Võ Nguyên Giáp'],
+                        time: '2026-11-02T08:00',
+                        status: 'Chờ ghép'
+                    }
+                ];
+
+                const sampleCustomers = [
+                    {
+                        id: 'CUST_DEMO_1',
+                        name: 'Trần Thị Mỹ',
+                        phone: '0989998877',
+                        address: 'Số 45 đường Võ Nguyên Giáp, Quận Cái Răng, Cần Thơ',
+                        detectedArea: 'Võ Nguyên Giáp',
+                        destination: 'Ninh Kiều, Cần Thơ',
+                        weight: 'M',
+                        time: '2026-11-02T08:30',
+                        status: 'Chờ ghép'
+                    }
+                ];
+
+                saveDrivers(sampleDrivers);
+                saveCustomers(sampleCustomers);
+            }
+        }
+
+        // ON PAGE LOAD INITIALIZATION
+        window.onload = function() {
+            seedDemoDataIfEmpty();
+            navigateTo('home');
+        };
+    </script>
+</body>
+</html>
